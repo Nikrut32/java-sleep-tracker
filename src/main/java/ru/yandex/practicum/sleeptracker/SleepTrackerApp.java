@@ -13,7 +13,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class SleepTrackerApp {
-    private List<Function<List<SleepingSession>, ?>> functions = new ArrayList<>(List.of(
+    private static List<Function<List<SleepingSession>, ?>> functions = new ArrayList<>(List.of(
             new AmountOfSessions(),
             new AverageSessionDuration(),
             new MaximumSessionDuration(),
@@ -37,13 +37,8 @@ public class SleepTrackerApp {
             System.out.println("Произошла ошибка во время чтения файла");
         }
 
-        AmountOfSessions amountOfSessions = new AmountOfSessions();
-        AverageSessionDuration averageSessionDuration = new AverageSessionDuration();
-        MaximumSessionDuration maximumSessionDuration = new MaximumSessionDuration();
-        MinimumSessionDuration minimumSessionDuration = new MinimumSessionDuration();
-        System.out.println(amountOfSessions.apply(sessions) + "\n"
-                + averageSessionDuration.apply(sessions) + "\n"
-                + maximumSessionDuration.apply(sessions) + "\n"
-                + minimumSessionDuration.apply(sessions));
+        functions.stream()
+                .forEach(function ->
+                        System.out.println(SleepAnalysisResult.print(function) + function.apply(sessions)));
     }
 }

@@ -5,10 +5,10 @@ import ru.yandex.practicum.sleeptracker.SleepingSession;
 import java.util.List;
 import java.util.function.Function;
 
-public class AmountOfSessions implements Function<List<SleepingSession>, Integer> {
+public class AmountOfSessions implements Function<List<SleepingSession>, Long> {
     @Override
-    public Integer apply(List<SleepingSession> sessions) {
-        return sessions.size();
+    public Long apply(List<SleepingSession> sessions) {
+        return (long) sessions.size();
     }
 }
 

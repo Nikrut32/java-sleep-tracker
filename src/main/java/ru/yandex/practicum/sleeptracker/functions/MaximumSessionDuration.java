@@ -4,7 +4,6 @@ import ru.yandex.practicum.sleeptracker.SleepingSession;
 
 import java.time.Duration;
 import java.util.List;
-import java.util.OptionalLong;
 import java.util.function.Function;
 
 public class MaximumSessionDuration implements Function<List<SleepingSession>, Long> {
