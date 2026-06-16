@@ -1,12 +1,12 @@
 package ru.yandex.practicum.sleeptracker.functions;
 
+import ru.yandex.practicum.sleeptracker.SleepAnalysisResult;
 import ru.yandex.practicum.sleeptracker.SleepingSession;
 
 import java.time.Duration;
 import java.util.List;
-import java.util.function.Function;
 
-public class MinimumSessionDuration implements Function<List<SleepingSession>, Long> {
+public class MinimumSessionDuration implements SleepAnalysisResult<Long> {
     @Override
     public Long apply(List<SleepingSession> sessions) {
         return sessions.stream()
@@ -14,5 +14,10 @@ public class MinimumSessionDuration implements Function<List<SleepingSession>, L
                 .min()
                 .orElse(0);
 
+    }
+
+    @Override
+    public String getDescription() {
+        return "Минимальная продолжительность сессии (в минутах): ";
     }
 }

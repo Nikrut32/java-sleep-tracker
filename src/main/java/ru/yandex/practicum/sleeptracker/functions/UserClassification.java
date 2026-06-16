@@ -1,12 +1,12 @@
 package ru.yandex.practicum.sleeptracker.functions;
 
+import ru.yandex.practicum.sleeptracker.SleepAnalysisResult;
 import ru.yandex.practicum.sleeptracker.SleepingSession;
 
 import java.time.LocalTime;
 import java.util.List;
-import java.util.function.Function;
 
-public class UserClassification implements Function<List<SleepingSession>, String> {
+public class UserClassification implements SleepAnalysisResult<String> {
     @Override
     public String apply(List<SleepingSession> sessions) {
         long countOwl = sessions.stream()
@@ -37,5 +37,10 @@ public class UserClassification implements Function<List<SleepingSession>, Strin
             return "Голубь";
         }
         return "Голубь";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Классификация пользователя: ";
     }
 }

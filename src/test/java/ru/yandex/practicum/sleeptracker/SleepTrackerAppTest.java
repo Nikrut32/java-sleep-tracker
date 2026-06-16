@@ -58,7 +58,7 @@ public class SleepTrackerAppTest {
     @Test
     void sleeplessNightsOutsideThePeriodTest() {
         List<String> sessionsString = new ArrayList<>(List.of("02.10.25 18:50;02.10.25 21:30;NORMAL",
-                "10.10.25 06:30;10.10.25 11:45;NORMAL"));
+                "03.10.25 06:30;03.10.25 11:45;NORMAL"));
         List<SleepingSession> sessionsTest = sessionsString.stream()
                 .map(SleepingSession::new)
                 .collect(Collectors.toList());
@@ -81,7 +81,7 @@ public class SleepTrackerAppTest {
     @Test
     void sleeplessNightsBorderBeforeAndAfterTest() {
         List<String> sessionsString = new ArrayList<>(List.of("01.10.25 22:10;02.10.25 00:00;NORMAL",
-                "06.10.25 06:00;06.10.25 09:45;GOOD"));
+                "02.10.25 06:00;02.10.25 09:45;GOOD"));
         List<SleepingSession> sessionsTest = sessionsString.stream()
                 .map(SleepingSession::new)
                 .collect(Collectors.toList());

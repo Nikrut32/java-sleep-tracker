@@ -11,9 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class SleepTrackerApp {
-    private static List<Function<List<SleepingSession>, ?>> functions = new ArrayList<>(List.of(
+    private static List<SleepAnalysisResult<?>> functions = new ArrayList<>(List.of(
             new AmountOfSessions(),
             new AverageSessionDuration(),
             new MaximumSessionDuration(),
@@ -24,21 +26,22 @@ public class SleepTrackerApp {
     private static List<SleepingSession> sessions;
 
     public static void main(String[] args) {
-        try (InputStream inputStream = SleepTrackerApp.class.getResourceAsStream("/sleep_log.txt");
-             BufferedReader fileDictionaryReade = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
+        String filePath = args[0];
 
-            sessions = fileDictionaryReade.lines()
+        try (InputStream inputStream = Files.newInputStream(Paths.get(filePath));
+             BufferedReader fileDictionaryReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
+
+            sessions = fileDictionaryReader.lines()
                     .map(SleepingSession::new)
                     .collect(Collectors.toList());
 
-        } catch (NullPointerException e) {
-            System.out.println("Файл sleep_log.txt не найден в папке resources");
+        } catch (java.nio.file.NoSuchFileException e) {
+            System.out.println("Файл не найден по пути: " + filePath);
         } catch (IOException e) {
             System.out.println("Произошла ошибка во время чтения файла");
         }
 
-        functions.stream()
-                .forEach(function ->
-                        System.out.println(SleepAnalysisResult.print(function) + function.apply(sessions)));
+        functions.forEach(function ->
+                        System.out.println(function.getDescription() + function.apply(sessions)));
     }
 }
